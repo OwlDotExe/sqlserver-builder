@@ -1,0 +1,19 @@
+{
+    "projects" : [
+        {
+            "name": "your_project_name",
+            "instance_name": "your_instance_name",
+            "database_name": "your_database_name",
+            "paths": [
+                "your_path_to_your_file\\example.sql"
+            ],
+            "credentials": [
+                {
+                    "environment": "your_environment",
+                    "user": "your_user",
+                    "password": "your_password"
+                }
+            ]
+        }
+    ]
+}
