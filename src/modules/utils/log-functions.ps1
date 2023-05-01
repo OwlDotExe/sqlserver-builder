@@ -3,6 +3,7 @@ Purpose:            Function that can takes any message, status and color for lo
 Parameters:         message => The main content of the log.
                     status => Information for the user.
                     color => Color used for the status.
+Return:             Ø
 #>
 function writeDefaultLog {
 

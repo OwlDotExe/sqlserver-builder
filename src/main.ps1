@@ -1,4 +1,4 @@
-# --> Params ? yes => read configuration file and cast it as an object.
+# --> Refactor of module sourcing.
 # --> Check configuration file content.
 # --> Check for environment mode => yes => success no => error.
 # --> Assign the right list of projects to be treated => all if nothing or just projects passed.
@@ -13,21 +13,14 @@
 #                                                                         #
 # *********************************************************************** #
 
-. "$PSScriptRoot\modules\utils\log-functions.ps1"
-. "$PSScriptRoot\modules\utils\constraint-functions.ps1"
+. ".\src\modules\utils\log-functions.ps1"
+. ".\src\modules\utils\constraint-functions.ps1"
+. ".\src\modules\utils\file-functions.ps1"
+. ".\src\modules\constants\colors.ps1"
+. ".\src\modules\constants\statuses.ps1"
+. ".\src\modules\constants\error-messages.ps1"
+. ".\src\modules\constants\success-messages.ps1"
 
-# ***** Global variables defined at the begining of the script ***** //
-[string]$global:error_status = "error"
-[string]$global:success_status = "success"
-
-[System.ConsoleColor]$global:error_color = [System.ConsoleColor]::Red
-[System.ConsoleColor]$global:success_color = [System.ConsoleColor]::Green
-
-[string]$global:error_empty_args = "The list of arguments passed with the command line execution is empty. You must provide at least 1 parameters with the command line execution."
-[string]$global:error_environment_unknown = "The environment passed with the command line execution is not available. You must choose between one of these environments : local or beta."
-
-[string]$global:success_empty_args = "The list of arguments passed with the command line execution went through the empty check successfully."
-[string]$global:success_environment_known = "The environment passed with the command line execution went through the environment check successfully.";
 
 Clear-Host
 
@@ -48,3 +41,8 @@ if ($result -eq $false) {
 } else {
     writeDefaultLog -message $success_environment_known -status $success_status -color $success_color
 }
+
+# ***** Get the content of the configuration file ***** //
+[PSCustomObject]$jsonObject = readConfigurationFile
+
+# Write-Host $jsonObject
