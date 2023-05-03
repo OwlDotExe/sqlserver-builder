@@ -24,7 +24,7 @@
 
 Clear-Host
 
-# ***** First check --> Is command line arguments empty ***** //
+# ***** --> Is command line arguments empty ***** #
 if ($args.Count -eq 0) { 
     writeDefaultLog -message $error_empty_args -status $error_status -color $error_color
     exit
@@ -32,7 +32,7 @@ if ($args.Count -eq 0) {
     writeDefaultLog -message $success_empty_args -status $success_status -color $success_color
 }
 
-# ***** Second check --> Is environment passed in the list of existing environment ***** #
+# ***** --> Is environment passed in the list of existing environment ***** #
 [bool]$result = isEnvironmentValid -environment $args[0]
 
 if ($result -eq $false) {
@@ -42,7 +42,15 @@ if ($result -eq $false) {
     writeDefaultLog -message $success_environment_known -status $success_status -color $success_color
 }
 
-# ***** Get the content of the configuration file ***** //
+# ***** Get the content of the configuration file ***** #
 [PSCustomObject]$jsonObject = readConfigurationFile
 
-# Write-Host $jsonObject
+# ***** --> Is projects property empty or not ***** #
+if ($jsonObject.projects.Count -eq 0) {
+    writeDefaultLog -message $error_projects_empty -status $error_status -color $error_color
+} else {
+    writeDefaultLog -message $success_project_filled -status $success_status -color $success_color
+}
+
+# ***** --> Complete checking of projects and credentials objects of the configuration file ***** #
+checkConfiguration -jsonObject $jsonObject

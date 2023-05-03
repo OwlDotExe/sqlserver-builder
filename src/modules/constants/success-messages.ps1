@@ -11,3 +11,5 @@
 
 [string]$global:success_config_read = "The content of the configuration file (config.json) has been read successfully."
 [string]$global:success_config_filled = "The configuration file went through content check successfully."
+
+[string]$global:success_project_filled = "The 'projects' property went through empty check successfully.";
