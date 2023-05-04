@@ -15,3 +15,6 @@
 [string]$global:success_project_filled = "The 'projects' property went through empty check successfully.";
 
 [string]$global:success_project_filtering = "Projects of the config.json file went through filtering process successfully."
+
+[string]$global:success_module_installed = "The SqlServer module is already installed and there is no need to install it.";
+[string]$global:success_module_installation = "The SqlServer module was missing and it has been installed successfully.";

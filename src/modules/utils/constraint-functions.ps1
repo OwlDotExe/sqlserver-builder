@@ -15,7 +15,7 @@ function isEnvironmentValid {
         [Parameter(Mandatory = $true)] [string] $environment
     )
 
-    if ($environments -contains $environment) {
+    if ($environments -contains $environment.ToLower()) {
         return $true;
     }
     return $false;
