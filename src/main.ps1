@@ -16,6 +16,7 @@
 . ".\src\modules\utils\log-functions.ps1"
 . ".\src\modules\utils\constraint-functions.ps1"
 . ".\src\modules\utils\file-functions.ps1"
+. ".\src\modules\utils\treatment-functions.ps1"
 . ".\src\modules\constants\colors.ps1"
 . ".\src\modules\constants\statuses.ps1"
 . ".\src\modules\constants\error-messages.ps1"
@@ -54,3 +55,22 @@ if ($jsonObject.projects.Count -eq 0) {
 
 # ***** --> Complete checking of projects and credentials objects of the configuration file ***** #
 checkConfiguration -jsonObject $jsonObject
+
+# ***** --> Potential filtering action if the user has given arguments in the command line execution ***** #
+[PSCustomObject[]]$projects = $jsonObject.projects
+
+if ($args.Count -ge 2) {
+
+    [Int32]$length = $args.Count - 1
+    [string[]]$project_arguments = $args[1..$length]
+
+    for ($i = 0; $i -lt $project_arguments.Length; $i++) {
+        $project_arguments[$i] = $project_arguments[$i].ToLower()
+    }
+
+    $projects = filterProjects -projects $projects -arguments $project_arguments
+
+    writeDefaultLog -message $success_project_filtering -status $success_status -color $success_color
+}
+
+Write-Host $projects

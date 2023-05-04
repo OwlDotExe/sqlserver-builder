@@ -135,9 +135,20 @@ function areCredentialsValid {
 
     foreach ($credential in $credentials) {
 
-        [bool]$result = isEnvironmentValid -environment $credential.environment
-        [string]$success_message = "The 'environment' property of credential number $index of project number $index went through the environment check successfully."
-        [string]$error_message = "The 'enviroment' property of credential number $index of project number $index is not available. You must choose between one of these environments : local or beta."
+        [bool]$result = [string]::IsNullOrWhitespace($credential.environment)
+        [string]$error_message = "The 'environment' property of credential number $index of project number $index is empty or is missing. Please make sure to have this property in your config.json file."
+        [string]$success_message = "The 'enviroment' property of credential number $index of project number $index went through the empty check successfully."
+
+        if ($result -eq $true) {
+            writeDefaultLog -message $error_message -status $error_status -color $error_color
+            exit
+        } else {
+            writeDefaultLog -message $success_message -status $success_status -color $success_color
+        }
+
+        $result = isEnvironmentValid -environment $credential.environment
+        $success_message = "The 'environment' property of credential number $index of project number $index went through the environment check successfully."
+        $error_message = "The 'enviroment' property of credential number $index of project number $index is not available. You must choose between one of these environments : local or beta."
 
         if ($result -eq $false) {
             writeDefaultLog -message $error_message -status $error_status -color $error_color

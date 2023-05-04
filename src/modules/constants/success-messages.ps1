@@ -13,3 +13,5 @@
 [string]$global:success_config_filled = "The configuration file went through content check successfully."
 
 [string]$global:success_project_filled = "The 'projects' property went through empty check successfully.";
+
+[string]$global:success_project_filtering = "Projects of the config.json file went through filtering process successfully."
